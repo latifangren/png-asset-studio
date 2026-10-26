@@ -5,12 +5,8 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  Archive,
-  Bot,
   CheckCircle2,
   Grid,
-  Layers,
-  Search,
   Sparkles,
   Type,
 } from 'lucide-react';
@@ -34,13 +30,15 @@ import {
 import { FontOption, INITIAL_FONT_OPTIONS } from './utils/fontLoader';
 import { renderUniversalTextToCanvas } from './utils/universalRenderer';
 import { buildZipArchive, dataUrlToUint8Array } from './utils/zipBuilder';
-import { GlyphCard, PreviewBgMode } from './components/GlyphCard';
+import { PreviewBgMode } from './components/GlyphCard';
 import { GlyphInspectModal } from './components/GlyphInspectModal';
-import { ReferenceComparisonPanel } from './components/ReferenceComparisonPanel';
 import { StyleAndFontSidebar } from './components/StyleAndFontSidebar';
 import { WordAndBatchWorkspace } from './components/WordAndBatchWorkspace';
 import { CustomCharsetWorkspace } from './components/CustomCharsetWorkspace';
 import { McpConnectionModal } from './components/McpConnectionModal';
+import { AppHeader } from './components/AppHeader';
+import { AppFooter } from './components/AppFooter';
+import { ClassicCatalog } from './components/ClassicCatalog';
 import { useLocale } from './i18n';
 
 const CUSTOM_PRESETS_STORAGE_KEY = 'stoneglyph_universal_custom_presets_v1';
@@ -126,7 +124,7 @@ export default function App() {
         return next;
       });
       setRecipe(newPreset);
-      showNotice(`Preset kustom "${name}" berhasil disimpan!`);
+      showNotice(t('notices.presetSaved', { name }));
     },
     [recipe, showNotice]
   );
@@ -145,7 +143,7 @@ export default function App() {
       if (recipe.id === id) {
         setRecipe(BUILTIN_PRESETS[0]);
       }
-      showNotice('Preset kustom dihapus.');
+      showNotice(t('notices.presetDeleted'));
     },
     [recipe.id, showNotice]
   );
@@ -224,7 +222,7 @@ export default function App() {
       link.href = pngDataUrl;
       link.click();
       showNotice(
-        `Berhasil mengunduh ${link.download} (${targetSize}×${targetSize}px PNG Transparan)`
+        t('notices.classicGlyphDownloaded', { file: link.download, size: targetSize })
       );
     },
     [classicStyleConfig, showNotice]
@@ -259,7 +257,7 @@ export default function App() {
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 4000);
     showNotice(
-      `Paket ZIP berisi ${batchWords.length} kata tombol PNG transparan berhasil diunduh!`
+      t('notices.batchZipDownloaded', { count: batchWords.length })
     );
   }, [batchWords, customPresets, recipe, showNotice]);
 
@@ -280,11 +278,11 @@ export default function App() {
     const blob = new Blob([zipBytes], { type: 'application/zip' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.download = `StoneGlyph_ABOUT_A-Z_0-9_${classicStyleConfig.size}px.zip`;
+    link.download = `PNGAssetStudio_ABOUT_A-Z_0-9_${classicStyleConfig.size}px.zip`;
     link.href = url;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 4000);
-    showNotice('Paket 36 file PNG transparan (A-Z & 0-9) berhasil diunduh!');
+    showNotice(t('notices.classicZipDownloaded'));
   }, [classicStyleConfig, showNotice]);
 
   const handleDownloadClassicSpriteSheet = useCallback(() => {
@@ -298,11 +296,11 @@ export default function App() {
 
     const zipBytes = buildZipArchive([
       {
-        filename: 'StoneGlyph_SpriteSheet_A-Z_0-9.png',
+        filename: 'PNGAssetStudio_SpriteSheet_A-Z_0-9.png',
         data: dataUrlToUint8Array(sheetDataUrl),
       },
       {
-        filename: 'StoneGlyph_Atlas_Metadata.json',
+        filename: 'PNGAssetStudio_Atlas_Metadata.json',
         data: encoder.encode(metadataJson),
       },
     ]);
@@ -310,112 +308,25 @@ export default function App() {
     const blob = new Blob([zipBytes], { type: 'application/zip' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.download = 'StoneGlyph_SpriteSheet_Atlas.zip';
+    link.download = 'PNGAssetStudio_SpriteSheet_Atlas.zip';
     link.href = url;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 4000);
-    showNotice('Sprite Sheet Atlas 6×6 (.PNG + .JSON) berhasil diunduh!');
+    showNotice(t('notices.spriteSheetDownloaded'));
   }, [classicStyleConfig, showNotice]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0F172A] text-slate-100">
-      {/* Strict 3-Zone Top Navigation Bar Contract */}
-      <header className="sticky top-0 z-30 flex items-center justify-between gap-8 px-6 py-3.5 bg-[#0F172A]/95 backdrop-blur-xs border-b border-slate-800">
-        {/* Zone 1: Single text element wordmark */}
-        <a
-          href="#top"
-          onClick={(e) => {
-            e.preventDefault();
-            setActiveWorkspace('word-batch');
-          }}
-          className="text-lg font-bold tracking-tight text-slate-100 whitespace-nowrap shrink-0"
-        >
-          {t('app.wordmark')}
-        </a>
-
-        {/* Zone 2: Concise single-line navigation links */}
-        <nav
-          aria-label={t('nav.main')}
-          className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300"
-        >
-          <a
-            href="#word-batch"
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveWorkspace('word-batch');
-            }}
-            className={`hover:text-amber-400 transition-colors whitespace-nowrap shrink-0 ${
-              activeWorkspace === 'word-batch' ? 'text-amber-400 font-semibold' : ''
-            }`}
-          >
-            {t('nav.wordBatch')}
-          </a>
-          <a
-            href="#custom-charset"
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveWorkspace('custom-charset');
-            }}
-            className={`hover:text-amber-400 transition-colors whitespace-nowrap shrink-0 ${
-              activeWorkspace === 'custom-charset'
-                ? 'text-amber-400 font-semibold'
-                : ''
-            }`}
-          >
-            {t('nav.charset')}
-          </a>
-          <a
-            href="#classic-about"
-            onClick={(e) => {
-              e.preventDefault();
-              setActiveWorkspace('classic-about');
-            }}
-            className={`hover:text-amber-400 transition-colors whitespace-nowrap shrink-0 ${
-              activeWorkspace === 'classic-about'
-                ? 'text-amber-400 font-semibold'
-                : ''
-            }`}
-          >
-            {t('nav.classic')}
-          </a>
-        </nav>
-
-        {/* Zone 3: 1 primary action & MCP Agent connection modal trigger */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          <label className="sr-only" htmlFor="locale-select">{t('app.language')}</label>
-          <select
-            id="locale-select"
-            value={locale}
-            onChange={(e) => setLocale(e.target.value as 'en' | 'id')}
-            className="px-2 py-2 text-xs font-semibold text-slate-200 bg-slate-800 border border-slate-700 rounded-lg cursor-pointer"
-          >
-            <option value="id">{t('app.languageIndonesian')}</option>
-            <option value="en">{t('app.languageEnglish')}</option>
-          </select>
-          <button
-            type="button"
-            onClick={() => setIsMcpModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-amber-300 bg-slate-800 hover:bg-slate-700 border border-amber-500/30 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 shadow-sm"
-            title={t('actions.mcpTitle')}
-          >
-            <Bot className="w-3.5 h-3.5 text-amber-400" />
-            <span>{t('actions.mcpAgent')}</span>
-          </button>
-          <button
-            type="button"
-            onClick={
-              activeWorkspace === 'classic-about'
-                ? handleDownloadClassicAll36Zip
-                : handleDownloadPrimaryBundleZip
-            }
-            className="px-4 py-2 text-xs font-semibold text-slate-950 bg-amber-500 hover:bg-amber-400 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0"
-          >
-            {activeWorkspace === 'classic-about'
-              ? t('actions.downloadClassic')
-              : t('actions.downloadBatch')}
-          </button>
-        </div>
-      </header>
+      <AppHeader
+        activeWorkspace={activeWorkspace}
+        onSelectWorkspace={setActiveWorkspace}
+        onOpenMcp={() => setIsMcpModalOpen(true)}
+        onDownloadBundle={
+          activeWorkspace === 'classic-about'
+            ? handleDownloadClassicAll36Zip
+            : handleDownloadPrimaryBundleZip
+        }
+      />
 
       {/* Main Studio Container */}
       <main
@@ -540,173 +451,25 @@ export default function App() {
             </div>
           </div>
         ) : (
-          /* Mode 3: Classic Carved Stone ABOUT 36-Glyph Catalog & Reference Comparison */
-          <div className="space-y-8">
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-3 p-3.5 rounded-xl bg-[#151F32] border border-slate-800 items-center">
-              <div className="xl:col-span-5 flex items-center gap-1 p-1 bg-slate-900 rounded-lg border border-slate-800/80 overflow-x-auto">
-                {(
-                  [
-                    { id: 'all', label: 'Semua (36)' },
-                    { id: 'letter', label: 'Huruf A–Z (26)' },
-                    { id: 'number', label: 'Angka 1–9 & 0 (10)' },
-                    { id: 'reference', label: 'Referensi ABOUT (5)' },
-                  ] as const
-                ).map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setCategoryFilter(tab.id)}
-                    className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-                      categoryFilter === tab.id
-                        ? 'bg-amber-500 text-slate-950 font-semibold'
-                        : 'text-slate-300 hover:text-white'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="xl:col-span-3 relative">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <input
-                  type="search"
-                  aria-label="Cari karakter huruf atau angka"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Cari karakter (mis. A, Q, 9, 0)..."
-                  className="w-full bg-slate-900 border border-slate-800 focus:border-amber-400 focus:outline-none rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-100 placeholder:text-slate-500"
-                />
-              </div>
-
-              <div className="xl:col-span-2 flex items-center justify-between gap-2 bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
-                <label
-                  htmlFor="select-classic-size"
-                  className="text-xs text-slate-400 whitespace-nowrap"
-                >
-                  Ukuran PNG:
-                </label>
-                <select
-                  id="select-classic-size"
-                  value={classicStyleConfig.size}
-                  onChange={(e) =>
-                    setClassicStyleConfig({
-                      ...classicStyleConfig,
-                      size: Number(e.target.value),
-                    })
-                  }
-                  className="bg-transparent text-xs font-mono font-semibold text-amber-300 focus:outline-none cursor-pointer"
-                >
-                  <option value={256} className="bg-slate-900 text-slate-100">
-                    256×256 px
-                  </option>
-                  <option value={512} className="bg-slate-900 text-slate-100">
-                    512×512 px
-                  </option>
-                  <option value={1024} className="bg-slate-900 text-slate-100">
-                    1024×1024 px
-                  </option>
-                </select>
-              </div>
-
-              <div className="xl:col-span-2 flex items-center gap-2 justify-end">
-                <button
-                  type="button"
-                  onClick={handleDownloadClassicSpriteSheet}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 cursor-pointer whitespace-nowrap"
-                >
-                  <Grid className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Sprite Sheet</span>
-                </button>
-              </div>
-            </div>
-
-            {filteredLetters.length > 0 && (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                  <div className="flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-amber-400" />
-                    <h2 className="text-base font-bold text-slate-100">
-                      Huruf Alfabet A – Z ({filteredLetters.length} File PNG Transparan)
-                    </h2>
-                  </div>
-                  <span className="text-xs font-mono tabular-nums text-slate-400">
-                    A.png s/d Z.png · {classicStyleConfig.size}×{classicStyleConfig.size}px
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5">
-                  {filteredLetters.map((glyph) => (
-                    <GlyphCard
-                      key={glyph.id}
-                      glyph={glyph}
-                      dataUrl={glyphUrls[glyph.char]}
-                      exportSize={classicStyleConfig.size}
-                      bgMode={bgMode}
-                      onDownloadGlyph={handleDownloadClassicGlyph}
-                      onInspectGlyph={setInspectedGlyph}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {filteredNumbers.length > 0 && (
-              <div className="space-y-3">
-                <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                  <div className="flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-amber-400" />
-                    <h2 className="text-base font-bold text-slate-100">
-                      Angka Numerik 1 – 9 dan 0 ({filteredNumbers.length} File PNG Transparan)
-                    </h2>
-                  </div>
-                  <span className="text-xs font-mono tabular-nums text-slate-400">
-                    1.png s/d 9.png & 0.png · {classicStyleConfig.size}×{classicStyleConfig.size}px
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5">
-                  {filteredNumbers.map((glyph) => (
-                    <GlyphCard
-                      key={glyph.id}
-                      glyph={glyph}
-                      dataUrl={glyphUrls[glyph.char]}
-                      exportSize={classicStyleConfig.size}
-                      bgMode={bgMode}
-                      onDownloadGlyph={handleDownloadClassicGlyph}
-                      onInspectGlyph={setInspectedGlyph}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <ReferenceComparisonPanel
-              styleConfig={classicStyleConfig}
-              bgMode={bgMode}
-              glyphUrls={glyphUrls}
-              onDownloadGlyph={handleDownloadClassicGlyph}
-              onInspectGlyph={setInspectedGlyph}
-            />
-          </div>
+          <ClassicCatalog
+            categoryFilter={categoryFilter}
+            onCategoryFilter={setCategoryFilter}
+            searchQuery={searchQuery}
+            onSearchQuery={setSearchQuery}
+            classicStyleConfig={classicStyleConfig}
+            onClassicStyleConfig={setClassicStyleConfig}
+            filteredLetters={filteredLetters}
+            filteredNumbers={filteredNumbers}
+            glyphUrls={glyphUrls}
+            bgMode={bgMode}
+            onDownloadClassicGlyph={handleDownloadClassicGlyph}
+            onInspectGlyph={setInspectedGlyph}
+            onDownloadClassicSpriteSheet={handleDownloadClassicSpriteSheet}
+          />
         )}
       </main>
 
-      {/* Quiet Footer */}
-      <footer className="border-t border-slate-800/80 py-6 px-6 mt-12">
-        <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <span>
-            StoneGlyph Universal Game UI Text, Word & Bitmap Font Studio
-          </span>
-          <div className="flex items-center gap-4 font-mono tabular-nums">
-            <span>Font Aktif: {recipe.fontFamily}</span>
-            <span aria-hidden="true">·</span>
-            <span>Preset: {recipe.name}</span>
-            <span aria-hidden="true">·</span>
-            <span>Tinggi Kanvas: {recipe.fixedHeightPx}px</span>
-          </div>
-        </div>
-      </footer>
+      <AppFooter recipe={recipe} />
 
       <GlyphInspectModal
         glyph={inspectedGlyph}

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useLocale } from '../i18n';
 import { Download } from 'lucide-react';
 import {
   GlyphDefinition,
@@ -58,6 +59,7 @@ export const ReferenceComparisonPanel: React.FC<
   onDownloadGlyph,
   onInspectGlyph,
 }) => {
+  const { t } = useLocale();
   const aboutCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const bgClass = getPreviewBgClass(bgMode);
 
@@ -101,7 +103,7 @@ export const ReferenceComparisonPanel: React.FC<
           className="flex items-center gap-2 py-2 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-100 text-xs font-semibold border border-slate-700 transition-colors cursor-pointer whitespace-nowrap shrink-0 self-start md:self-auto"
         >
           <Download className="w-3.5 h-3.5 text-amber-400" />
-          <span>Unduh Kata &ldquo;ABOUT&rdquo; (.PNG)</span>
+          <span>{t('reference.downloadAbout')}</span>
         </button>
       </div>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocale } from '../i18n';
 import { Download, Maximize2 } from 'lucide-react';
 import { GlyphDefinition } from '../utils/glyphCatalog';
 
@@ -34,6 +35,7 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
   onDownloadGlyph,
   onInspectGlyph,
 }) => {
+  const { t } = useLocale();
   const bgClass = getPreviewBgClass(bgMode);
 
   return (
@@ -99,7 +101,7 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
             className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-xs transition-colors cursor-pointer whitespace-nowrap shrink-0"
           >
             <Download className="w-3.5 h-3.5 shrink-0" />
-            <span>Unduh {glyph.filename}</span>
+            <span>{t('glyph.downloadFile', { file: glyph.filename })}</span>
           </button>
           <button
             type="button"

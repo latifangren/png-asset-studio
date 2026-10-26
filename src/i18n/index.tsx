@@ -47,7 +47,7 @@ function lookup(dict: Dictionary, key: DictionaryKey): string {
 interface LocaleContextValue {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: (key: DictionaryKey) => string;
+  t: (key: DictionaryKey, vars?: Record<string, string | number>) => string;
 }
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
@@ -68,7 +68,13 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     () => ({
       locale,
       setLocale,
-      t: (key) => lookup(dictionaries[locale], key),
+      t: (key, vars) => {
+        const value = lookup(dictionaries[locale], key);
+        if (!vars) return value;
+        return value.replace(/\{(\w+)\}/g, (_m, name) =>
+          vars[name] !== undefined ? String(vars[name]) : `{${name}}`,
+        );
+      },
     }),
     [locale, setLocale],
   );

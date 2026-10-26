@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useLocale } from '../i18n';
 import {
   Archive,
   Download,
@@ -52,6 +53,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
   onBgModeChange,
   onNotice,
 }) => {
+  const { t } = useLocale();
   const [wordText, setWordText] = useState('SETTINGS');
   const [activeLangFolder, setActiveLangFolder] = useState('en');
   const [canvasDims, setCanvasDims] = useState({ width: 0, height: 96 });
@@ -232,10 +234,10 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
           <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-lg border border-slate-800 self-start sm:self-auto">
             {(
               [
-                { id: 'checker-dark', label: 'Transparan' },
-                { id: 'solid-dark', label: 'Gelap' },
-                { id: 'game-wood', label: 'Kayu' },
-                { id: 'checker-light', label: 'Terang' },
+                { id: 'checker-dark', label: t('workspace.bgTransparent') },
+                { id: 'solid-dark', label: t('workspace.bgDark') },
+                { id: 'game-wood', label: t('workspace.bgWood') },
+                { id: 'checker-light', label: t('workspace.bgLight') },
               ] as const
             ).map((bg) => (
               <button
@@ -262,14 +264,14 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
                 htmlFor="word-text-input"
                 className="block text-xs font-semibold text-slate-300"
               >
-                Teks Tombol / Kata UI Game:
+                {t('workspace.wordLabel')}
               </label>
               <input
                 id="word-text-input"
                 type="text"
                 value={wordText}
                 onChange={(e) => setWordText(e.target.value)}
-                placeholder="Ketik kata (mis. SETTINGS, PENGATURAN, ABOUT)..."
+                placeholder={t('workspace.wordPlaceholder')}
                 className="w-full bg-slate-900 border border-slate-700 focus:border-amber-400 rounded-lg px-3.5 py-2.5 text-base font-bold text-slate-100 focus:outline-none"
               />
             </div>
@@ -279,7 +281,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
                 htmlFor="word-lang-select"
                 className="block text-xs font-semibold text-slate-300"
               >
-                Folder Bahasa Target:
+                {t('workspace.langFolderLabel')}
               </label>
               <select
                 id="word-lang-select"
@@ -297,7 +299,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
           {/* Quick Word Buttons */}
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-xs text-slate-400 font-medium">
-              Kata Cepat:
+              {t('workspace.quickWords')}
             </span>
             {QUICK_WORD_CHIPS.map((chip) => (
               <button
@@ -323,12 +325,12 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs font-mono tabular-nums text-slate-400">
             <span>
-              Pratinjau Hasil Kanvas (Font:{' '}
+              {t('workspace.previewPrefix')}{' '}
               <strong className="text-slate-200">{recipe.fontFamily}</strong> ·
-              Preset: <strong className="text-amber-300">{recipe.name}</strong>)
+              {t('workspace.presetPrefix')} <strong className="text-amber-300">{recipe.name}</strong>)
             </span>
             <span className="text-emerald-400 font-semibold">
-              Dimensi: {canvasDims.width} × {canvasDims.height} px (RGBA Transparan)
+              {t('workspace.dimensions')} {canvasDims.width} × {canvasDims.height} px (RGBA Transparan)
             </span>
           </div>
 
@@ -353,7 +355,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
             >
               <Download className="w-4 h-4" />
               <span>
-                Unduh PNG ({safeFilePreview}.png · {canvasDims.width}×{canvasDims.height}px)
+                {t('workspace.downloadPng')} ({safeFilePreview}.png · {canvasDims.width}×{canvasDims.height}px)
               </span>
             </button>
 
@@ -363,7 +365,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
               className="flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold text-xs border border-slate-700 transition-colors cursor-pointer whitespace-nowrap shrink-0"
             >
               <FolderPlus className="w-4 h-4 text-amber-400" />
-              <span>Simpan ke Antrean Batch</span>
+              <span>{t('workspace.saveToBatch')}</span>
             </button>
 
             <button
@@ -372,7 +374,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
               className="flex items-center justify-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-medium text-xs border border-slate-700/80 transition-colors cursor-pointer whitespace-nowrap shrink-0"
             >
               <RefreshCw className="w-3.5 h-3.5" />
-              <span>Render Ulang</span>
+              <span>{t('workspace.rerender')}</span>
             </button>
           </div>
         </div>
@@ -380,18 +382,16 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
         {/* In-Game Placement Spec Box */}
         <div className="rounded-xl bg-slate-950/80 border border-slate-800/90 p-3.5 text-xs text-slate-300 space-y-1 font-mono">
           <div className="text-slate-400 font-sans font-semibold">
-            Spesifikasi Penempatan Aset di Proyek Game:
+            {t('workspace.specTitle')}
           </div>
           <div>
-            • Target Path:{' '}
+            • {t('workspace.specTargetPath')}{' '}
             <code className="text-amber-300 bg-amber-500/10 px-1.5 py-0.5 rounded">
               web/public/hd/menu/words/{activeLangFolder}/{safeFilePreview}.png
             </code>
           </div>
           <div className="text-slate-400 font-sans">
-            • Tinggi kanvas terkunci presisi di{' '}
-            <strong className="text-slate-200">{recipe.fixedHeightPx} piksel</strong>{' '}
-            agar rasio 1:1 di dalam game engine tanpa gepeng atau blur.
+            • {t('workspace.specHeightNote', { height: recipe.fixedHeightPx })}
           </div>
         </div>
       </section>
@@ -401,12 +401,12 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
           <div>
             <p className="text-xs font-mono text-amber-400">
-              Ekspor Massal Multi-Bahasa (EN & ID)
+              {t('workspace.batchHeader')}
             </p>
             <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2 mt-0.5">
               <Layers className="w-4 h-4 text-amber-400 shrink-0" />
               <span>
-                Daftar Batch Kata Tombol ({batchWords.length} Aset Siap Ekspor)
+                {t('workspace.batchListTitle', { count: batchWords.length })}
               </span>
             </h2>
           </div>
@@ -417,7 +417,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
             className="flex items-center gap-2 py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-colors cursor-pointer whitespace-nowrap shrink-0 self-start sm:self-auto"
           >
             <Archive className="w-4 h-4" />
-            <span>Unduh Semua Batch Kata (.ZIP)</span>
+            <span>{t('workspace.downloadAllBatch')}</span>
           </button>
         </div>
 
@@ -430,22 +430,22 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
             type="text"
             value={newBatchText}
             onChange={(e) => setNewBatchText(e.target.value)}
-            placeholder="Kata baru (mis. VICTORY)..."
-            aria-label="Kata batch baru"
+            placeholder={t('workspace.batchWordPlaceholder')}
+            aria-label={t('workspace.batchWordAria')}
             className="sm:col-span-4 bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs font-bold uppercase text-slate-100 focus:border-amber-400 focus:outline-none"
           />
           <input
             type="text"
             value={newBatchLang}
             onChange={(e) => setNewBatchLang(e.target.value)}
-            placeholder="Folder (en/id)"
-            aria-label="Folder bahasa"
+            placeholder={t('workspace.batchFolderPlaceholder')}
+            aria-label={t('workspace.batchFolderAria')}
             className="sm:col-span-2 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-200 focus:border-amber-400 focus:outline-none"
           />
           <select
             value={newBatchPresetId}
             onChange={(e) => setNewBatchPresetId(e.target.value)}
-            aria-label="Preset material untuk kata batch"
+            aria-label={t('workspace.batchPresetAria')}
             className="sm:col-span-3 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:border-amber-400 focus:outline-none"
           >
             {allPresets.map((p) => (
@@ -459,7 +459,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
             className="sm:col-span-3 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold text-xs border border-slate-700 cursor-pointer whitespace-nowrap"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Tambah Baris</span>
+            <span>{t('workspace.addRow')}</span>
           </button>
         </form>
 
@@ -468,10 +468,10 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="border-b border-slate-800 bg-slate-900/90 text-slate-400 font-semibold">
-                <th className="py-2.5 px-3">Kata Teks</th>
-                <th className="py-2.5 px-3">Preset Material</th>
-                <th className="py-2.5 px-3">Target Path ZIP</th>
-                <th className="py-2.5 px-3 text-right">Aksi</th>
+                <th className="py-2.5 px-3">{t('workspace.batchColWord')}</th>
+                <th className="py-2.5 px-3">{t('workspace.batchColPreset')}</th>
+                <th className="py-2.5 px-3">{t('workspace.batchColPath')}</th>
+                <th className="py-2.5 px-3 text-right">{t('workspace.batchColActions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/80 font-mono tabular-nums">
@@ -520,7 +520,7 @@ export const WordAndBatchWorkspace: React.FC<WordAndBatchWorkspaceProps> = ({
                               batchWords.filter((w) => w.id !== item.id)
                             )
                           }
-                          aria-label={`Hapus ${item.text} dari batch`}
+                          aria-label={t('workspace.batchDeleteAria', { text: item.text })}
                           className="p-1 text-slate-500 hover:text-rose-400 cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5" />

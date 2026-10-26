@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useLocale } from '../i18n';
 import { Check, Copy, Download, X } from 'lucide-react';
 import { GlyphDefinition, StoneStyleConfig } from '../utils/glyphCatalog';
 import { renderStoneGlyphToCanvas } from '../utils/stoneRenderer';
@@ -21,6 +22,7 @@ export const GlyphInspectModal: React.FC<GlyphInspectModalProps> = ({
   onClose,
   onDownloadGlyph,
 }) => {
+  const { t } = useLocale();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -151,25 +153,25 @@ export const GlyphInspectModal: React.FC<GlyphInspectModalProps> = ({
                 </h3>
                 <dl className="divide-y divide-slate-800 border-y border-slate-800 text-xs font-mono tabular-nums">
                   <div className="py-2 flex justify-between">
-                    <dt className="text-slate-400">Nama File</dt>
+                    <dt className="text-slate-400">{t('glyph.fileName')}</dt>
                     <dd className="text-amber-300 font-semibold">{glyph.filename}</dd>
                   </div>
                   <div className="py-2 flex justify-between">
-                    <dt className="text-slate-400">Kategori</dt>
+                    <dt className="text-slate-400">{t('glyph.category')}</dt>
                     <dd className="text-slate-200">
                       {glyph.category === 'letter' ? 'Huruf (A–Z)' : 'Angka (1–9, 0)'}
                     </dd>
                   </div>
                   <div className="py-2 flex justify-between">
-                    <dt className="text-slate-400">Channel Alpha</dt>
-                    <dd className="text-emerald-400">True 8-bit Transparan</dd>
+                    <dt className="text-slate-400">{t('glyph.alphaChannel')}</dt>
+                    <dd className="text-emerald-400">{t('glyph.alphaValue')}</dd>
                   </div>
                   <div className="py-2 flex justify-between">
-                    <dt className="text-slate-400">Cahaya Bevel</dt>
+                    <dt className="text-slate-400">{t('glyph.bevelLight')}</dt>
                     <dd className="text-slate-200">Kiri-Atas (-0.53, -0.72)</dd>
                   </div>
                   <div className="py-2 flex justify-between">
-                    <dt className="text-slate-400">Outline Luar</dt>
+                    <dt className="text-slate-400">{t('glyph.outerOutline')}</dt>
                     <dd className="text-slate-200">#08050A + Rim #3A0947</dd>
                   </div>
                 </dl>
@@ -211,7 +213,7 @@ export const GlyphInspectModal: React.FC<GlyphInspectModalProps> = ({
                 className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-xs transition-colors cursor-pointer whitespace-nowrap shrink-0"
               >
                 <Download className="w-4 h-4" />
-                <span>Unduh {glyph.filename}</span>
+                <span>{t('glyph.downloadFile', { file: glyph.filename })}</span>
               </button>
               <button
                 type="button"
@@ -221,12 +223,12 @@ export const GlyphInspectModal: React.FC<GlyphInspectModalProps> = ({
                 {copied ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Tersalin</span>
+                    <span>{t('glyph.copied')}</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5" />
-                    <span>Salin PNG</span>
+                    <span>{t('glyph.copyPng')}</span>
                   </>
                 )}
               </button>

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useLocale } from '../i18n';
 import {
   Archive,
   Download,
@@ -30,6 +31,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
   bgMode,
   onNotice,
 }) => {
+  const { t } = useLocale();
   const [charsetInput, setCharsetInput] = useState(DEFAULT_CHARSET_STRING);
   const [tileSize, setTileSize] = useState<number>(256);
   const [searchQuery, setSearchQuery] = useState('');
@@ -185,13 +187,13 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <p className="text-xs font-mono text-amber-400">
-            Generator Karakter Individual & Bitmap Font Engine (A–Z, a–z, 0–9, Simbol)
+            {t('charset.headerEyebrow')}
           </p>
           <h2 className="text-xl font-bold text-slate-100 mt-0.5">
-            Custom Character Set Slicer & BMFont Atlas ({parsedChars.length} Karakter Aktif)
+            {t('charset.headerTitle', { count: parsedChars.length })}
           </h2>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl">
-            otomatis merender setiap huruf, angka, dan simbol satu persatu menggunakan font aktif (<strong className="text-slate-200">{recipe.fontFamily}</strong>) dan material (<strong className="text-amber-300">{recipe.name}</strong>) ke dalam PNG transparan, Sprite Sheet JSON, atau format <code className="text-amber-300">.fnt</code> BMFont.
+            {t('charset.headerDescStart')}<strong className="text-slate-200">{recipe.fontFamily}</strong>) {t('charset.headerDescMiddle')} (<strong className="text-amber-300">{recipe.name}</strong>) {t('charset.headerDescEnd')}
           </p>
         </div>
 
@@ -202,7 +204,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
             className="flex items-center gap-1.5 py-2.5 px-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 text-xs font-semibold border border-slate-700 transition-colors cursor-pointer whitespace-nowrap shrink-0"
           >
             <FileCode className="w-4 h-4 text-amber-400" />
-            <span>Ekspor Sprite Sheet & BMFont (.FNT + .PNG)</span>
+            <span>{t('charset.exportAtlas')}</span>
           </button>
 
           <button
@@ -211,7 +213,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
             className="flex items-center gap-1.5 py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-colors cursor-pointer whitespace-nowrap shrink-0"
           >
             <Archive className="w-4 h-4" />
-            <span>Unduh Semua {parsedChars.length} Karakter (.ZIP)</span>
+            <span>{t('charset.downloadAll', { count: parsedChars.length })}</span>
           </button>
         </div>
       </div>
@@ -224,7 +226,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
               htmlFor="charset-string-input"
               className="text-xs font-semibold text-slate-300 whitespace-nowrap"
             >
-              Daftar Karakter Kustom:
+              {t('charset.listLabel')}
             </label>
             <div className="flex items-center gap-2 shrink-0">
               <button
@@ -232,7 +234,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
                 onClick={() => setCharsetInput(DEFAULT_CHARSET_STRING)}
                 className="text-[11px] font-mono text-amber-400 hover:underline cursor-pointer whitespace-nowrap shrink-0"
               >
-                Reset A–Z & 0–9
+                {t('charset.resetAz')}
               </button>
               <span className="text-slate-600">·</span>
               <button
@@ -240,7 +242,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
                 onClick={() => handleAppendChars('abcdefghijklmnopqrstuvwxyz')}
                 className="text-[11px] font-mono text-emerald-400 hover:underline cursor-pointer whitespace-nowrap shrink-0"
               >
-                + Huruf Kecil (a–z)
+                {t('charset.addLower')}
               </button>
               <span className="text-slate-600">·</span>
               <button
@@ -248,7 +250,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
                 onClick={() => handleAppendChars('!?+-:%$#&()')}
                 className="text-[11px] font-mono text-sky-400 hover:underline cursor-pointer whitespace-nowrap shrink-0"
               >
-                + Simbol Game
+                {t('charset.addSymbols')}
               </button>
             </div>
           </div>
@@ -257,7 +259,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
             type="text"
             value={charsetInput}
             onChange={(e) => setCharsetInput(e.target.value)}
-            placeholder="Ketik karakter yang ingin di-generate..."
+            placeholder={t('charset.charsetPlaceholder')}
             className="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-lg px-3 py-2 text-xs font-mono tracking-wider text-slate-100 focus:outline-none"
           />
         </div>
@@ -267,7 +269,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
             htmlFor="charset-search"
             className="block text-xs font-semibold text-slate-300"
           >
-            Filter Karakter:
+            {t('charset.filterLabel')}
           </label>
           <div className="relative">
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -276,7 +278,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari karakter..."
+              placeholder={t('charset.searchPlaceholder')}
               className="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-lg pl-8 pr-3 py-2 text-xs text-slate-100 focus:outline-none"
             />
           </div>
@@ -295,10 +297,10 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
             onChange={(e) => setTileSize(Number(e.target.value))}
             className="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-lg px-3 py-2 text-xs font-mono font-semibold text-amber-300 focus:outline-none cursor-pointer"
           >
-            <option value={128}>128 × 128 px (Ringan)</option>
-            <option value={256}>256 × 256 px (Standar UI)</option>
-            <option value={512}>512 × 512 px (HD Tajam)</option>
-            <option value={1024}>1024 × 1024 px (Ultra 4K)</option>
+            <option value={128}>{t('charset.sizeLight')}</option>
+            <option value={256}>{t('charset.sizeStandard')}</option>
+            <option value={512}>{t('charset.sizeSharp')}</option>
+            <option value={1024}>{t('charset.sizeUltra')}</option>
           </select>
         </div>
       </div>
@@ -351,7 +353,7 @@ export const CustomCharsetWorkspace: React.FC<CustomCharsetWorkspaceProps> = ({
                   className="w-full flex items-center justify-center gap-1 py-1.5 px-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-xs transition-colors cursor-pointer whitespace-nowrap"
                 >
                   <Download className="w-3 h-3 shrink-0" />
-                  <span>Unduh PNG</span>
+                  <span>{t('common.downloadPng')}</span>
                 </button>
               </div>
             </article>

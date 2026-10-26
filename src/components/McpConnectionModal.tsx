@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocale } from '../i18n';
 import {
   Bot,
   Check,
@@ -44,6 +45,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
   onClose,
   onNotice,
 }) => {
+  const { t } = useLocale();
   const [activeTab, setActiveTab] = useState<
     'cursor' | 'claude' | 'windsurf' | 'stdio' | 'tools'
   >('cursor');
@@ -78,11 +80,12 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
 
   const currentHost = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
   const sseUrl = `${currentHost}/sse`;
+  const httpUrl = `${currentHost}/mcp`;
 
   const cursorSnippet = JSON.stringify(
     {
       mcpServers: {
-        'stoneglyph-studio': {
+        'png-asset-studio': {
           url: sseUrl,
         },
       },
@@ -94,7 +97,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
   const claudeDesktopSnippet = JSON.stringify(
     {
       mcpServers: {
-        'stoneglyph-studio': {
+        'png-asset-studio': {
           url: sseUrl,
         },
       },
@@ -106,7 +109,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
   const windsurfSnippet = JSON.stringify(
     {
       mcpServers: {
-        'stoneglyph-studio': {
+        'png-asset-studio': {
           serverUrl: sseUrl,
         },
       },
@@ -120,7 +123,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
   const copyToClipboard = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
     setCopiedKey(key);
-    onNotice('Konfigurasi berhasil disalin ke clipboard!');
+    onNotice(t('mcp.configCopied'));
     setTimeout(() => {
       setCopiedKey((prev) => (prev === key ? null : prev));
     }, 2500);
@@ -158,7 +161,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-0.5">
-                Hubungkan Cursor, Claude Desktop, Windsurf, Cline, atau coding agent lain langsung ke proyek StoneGlyph ini.
+                {t('mcp.connectText')}
               </p>
             </div>
           </div>
@@ -179,7 +182,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
           <div className="rounded-xl bg-slate-900/80 border border-slate-800 p-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-300">
-                Alamat Endpoint MCP Server:
+                MCP Server Endpoint:
               </span>
               <a
                 href="/api/mcp/info"
@@ -187,7 +190,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
                 rel="noreferrer"
                 className="text-[11px] font-mono text-amber-400 hover:underline flex items-center gap-1"
               >
-                <span>Lihat Manifest JSON</span>
+                <span>{t('mcp.viewManifest')}</span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             </div>
@@ -202,12 +205,32 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
                 {copiedKey === 'endpoint' ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Disalin</span>
+                    <span>{t('mcp.copied')}</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5" />
-                    <span>Salin URL</span>
+                    <span>{t('mcp.copyUrl')}</span>
+                  </>
+                )}
+              </button>
+            </div>
+            <div className="flex items-center justify-between gap-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800 font-mono text-xs text-emerald-400">
+              <span className="truncate">{httpUrl} (Streamable HTTP)</span>
+              <button
+                type="button"
+                onClick={() => copyToClipboard(httpUrl, 'endpoint-http')}
+                className="flex items-center gap-1 px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs cursor-pointer whitespace-nowrap shrink-0"
+              >
+                {copiedKey === 'endpoint-http' ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>{t('mcp.copied')}</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>{t('mcp.copyUrl')}</span>
                   </>
                 )}
               </button>
@@ -259,12 +282,12 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
                     {copiedKey === 'cursor' ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>Tersalin</span>
+                        <span>{t('mcp.copied')}</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-3.5 h-3.5" />
-                        <span>Salin JSON</span>
+                        <span>{t('mcp.copyJson')}</span>
                       </>
                     )}
                   </button>
@@ -292,12 +315,12 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
                     {copiedKey === 'claude' ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>Tersalin</span>
+                        <span>{t('mcp.copied')}</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-3.5 h-3.5" />
-                        <span>Salin JSON</span>
+                        <span>{t('mcp.copyJson')}</span>
                       </>
                     )}
                   </button>
@@ -325,12 +348,12 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
                     {copiedKey === 'windsurf' ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>Tersalin</span>
+                        <span>{t('mcp.copied')}</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-3.5 h-3.5" />
-                        <span>Salin JSON</span>
+                        <span>{t('mcp.copyJson')}</span>
                       </>
                     )}
                   </button>
@@ -356,12 +379,12 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
                     {copiedKey === 'stdio' ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>Tersalin</span>
+                        <span>{t('mcp.copied')}</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-3.5 h-3.5" />
-                        <span>Salin Perintah</span>
+                        <span>{t('mcp.copyCommand')}</span>
                       </>
                     )}
                   </button>
@@ -436,11 +459,11 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
           <div className="rounded-xl bg-amber-500/5 border border-amber-500/20 p-4 space-y-2">
             <div className="flex items-center gap-2 text-xs font-semibold text-amber-300">
               <Code2 className="w-4 h-4" />
-              <span>Contoh Prompt yang Bisa Anda Berikan ke Coding Agent:</span>
+              <span>{t('mcp.promptLabel')}</span>
             </div>
             <ul className="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
               <li>
-                &ldquo;Tolong konek ke MCP StoneGlyph Studio, lalu buatkan daftar tombol game untuk menu utama: <code>PLAY</code>, <code>SETTINGS</code>, <code>INVENTORY</code>, dan <code>QUIT</code> menggunakan preset <strong>Grey Stone (EN)</strong>.&rdquo;
+                &ldquo;Tolong konek ke MCP {t('mcp.promptStudio')}, lalu buatkan daftar tombol game untuk menu utama: <code>PLAY</code>, <code>SETTINGS</code>, <code>INVENTORY</code>, dan <code>QUIT</code> menggunakan preset <strong>Grey Stone (EN)</strong>.&rdquo;
               </li>
               <li>
                 &ldquo;Generate pasangan tombol multi-bahasa EN/ID (misalnya <code>SETTINGS</code> / <code>PENGATURAN</code>) pada resolusi terkunci <strong>96px HD</strong> dan berikan path penyimpanan file yang benar.&rdquo;
@@ -454,7 +477,7 @@ export const McpConnectionModal: React.FC<McpConnectionModalProps> = ({
 
         {/* Footer */}
         <div className="px-6 py-3.5 border-t border-slate-800 bg-slate-900/60 flex items-center justify-between text-xs text-slate-400">
-          <span>Model Context Protocol (MCP) Server Ready · v1.0.0</span>
+          <span>{t('mcp.serverReady')}</span>
           <button
             type="button"
             onClick={onClose}

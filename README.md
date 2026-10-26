@@ -111,7 +111,7 @@ Claude Code dan `.vscode/mcp.json` untuk VS Code) + Streamable HTTP
 
 ## Yang sengaja BELUM diubah (keputusan menunggu user)
 
-1. **Nama brand di UI** masih `StoneGlyph Studio`. Nama repo/folder
+1. **Nama brand di UI** sudah `PNG Asset Studio` (sama dengan nama repo). Identitas MCP server (`stoneglyph-game-ui-asset-studio`) dan nama fungsi `renderStoneGlyph*` dipertahankan untuk kompatibilitas, bukan brand UI. Nama repo/folder
    sudah netral (`png-asset-studio`), tapi rename brand di semua tempat
    ditunda sampai user memutuskan nama final — rename setengah-setengah
    lebih buruk daripada menunda.

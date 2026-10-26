@@ -417,7 +417,7 @@ export function createStoneGlyphMcpServer(): McpServer {
           role: 'user',
           content: {
             type: 'text',
-            text: `Saya sedang mengembangkan game dengan genre "${genre}". Tolong rekomendasikan preset material yang cocok di StoneGlyph Studio untuk tombol-tombol berikut: ${buttons}. Berikan nama file PNG yang tepat dan folder penempatannya di proyek game.`,
+            text: `Saya sedang mengembangkan game dengan genre "${genre}". Tolong rekomendasikan preset material yang cocok di PNG Asset Studio untuk tombol-tombol berikut: ${buttons}. Berikan nama file PNG yang tepat dan folder penempatannya di proyek game.`,
           },
         },
       ],
