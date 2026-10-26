@@ -1,0 +1,45 @@
+{
+  "id": "crystal-ice",
+  "name": "Es Kristal (Frost UI)",
+  "badgeLabel": "Winter / Magic UI",
+  "fontFamily": "Fredoka",
+  "fontSizePx": 70,
+  "fontWeight": 700,
+  "dropShadowOpacity": 0.4,
+  "dropShadowOffsetY": 5,
+  "extrusionDepthPx": 5,
+  "extrusionColor": "#082f49",
+  "strokeWidthPx": 8,
+  "strokeColor": "#0c4a6e",
+  "outerRimWidthPx": 1.5,
+  "outerRimColor": "#0284c7",
+  "bevelStrength": 1.1,
+  "gradientStops": [
+    {
+      "offset": 0,
+      "color": "#ffffff"
+    },
+    {
+      "offset": 0.3,
+      "color": "#bae6fd"
+    },
+    {
+      "offset": 0.7,
+      "color": "#38bdf8"
+    },
+    {
+      "offset": 1,
+      "color": "#0369a1"
+    }
+  ],
+  "poreDensity": 12,
+  "poreMinRadius": 0.8,
+  "poreMaxRadius": 2.4,
+  "poreShadowColor": "#0369a1",
+  "poreRimColor": "#ffffff",
+  "crackIntensity": 45,
+  "crackColor": "#075985",
+  "topHighlightWidthPx": 2.4,
+  "topHighlightColor": "#ffffff",
+  "topHighlightOpacity": 0.8
+}

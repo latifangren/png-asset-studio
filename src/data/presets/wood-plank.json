@@ -1,0 +1,45 @@
+{
+  "id": "wood-plank",
+  "name": "Kayu Pahat (Wood UI)",
+  "badgeLabel": "RPG / Tavern UI",
+  "fontFamily": "Lilita One",
+  "fontSizePx": 70,
+  "fontWeight": 900,
+  "dropShadowOpacity": 0.45,
+  "dropShadowOffsetY": 6,
+  "extrusionDepthPx": 6,
+  "extrusionColor": "#1f0e05",
+  "strokeWidthPx": 9,
+  "strokeColor": "#2b1407",
+  "outerRimWidthPx": 0,
+  "outerRimColor": "#000000",
+  "bevelStrength": 0.9,
+  "gradientStops": [
+    {
+      "offset": 0,
+      "color": "#e6b17e"
+    },
+    {
+      "offset": 0.35,
+      "color": "#b87339"
+    },
+    {
+      "offset": 0.75,
+      "color": "#8c4f1f"
+    },
+    {
+      "offset": 1,
+      "color": "#592e0d"
+    }
+  ],
+  "poreDensity": 14,
+  "poreMinRadius": 0.8,
+  "poreMaxRadius": 2.2,
+  "poreShadowColor": "#472308",
+  "poreRimColor": "#f5cba2",
+  "crackIntensity": 50,
+  "crackColor": "#361904",
+  "topHighlightWidthPx": 1.8,
+  "topHighlightColor": "#ffe4c4",
+  "topHighlightOpacity": 0.5
+}

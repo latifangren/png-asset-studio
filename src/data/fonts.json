@@ -1,0 +1,37 @@
+[
+  {
+    "family": "Titan One",
+    "label": "Titan One (Mirip Flintstone / ABOUT HD)",
+    "source": "builtin"
+  },
+  {
+    "family": "Lilita One",
+    "label": "Lilita One (Chunky Rounded)",
+    "source": "builtin"
+  },
+  {
+    "family": "Fredoka",
+    "label": "Fredoka (Soft Pebble Rounded)",
+    "source": "builtin"
+  },
+  {
+    "family": "Bungee",
+    "label": "Bungee (Blocky Chiseled Rock)",
+    "source": "builtin"
+  },
+  {
+    "family": "Impact",
+    "label": "Impact (Sistem Kotak Padat)",
+    "source": "builtin"
+  },
+  {
+    "family": "Arial Black",
+    "label": "Arial Black (Sistem Sans Tebal)",
+    "source": "builtin"
+  },
+  {
+    "family": "Georgia",
+    "label": "Georgia (Sistem Klasik Serif)",
+    "source": "builtin"
+  }
+]

@@ -1,0 +1,45 @@
+{
+  "id": "metallic-iron",
+  "name": "Besi Tempa (Metallic)",
+  "badgeLabel": "Armor / Mech UI",
+  "fontFamily": "Bungee",
+  "fontSizePx": 64,
+  "fontWeight": 900,
+  "dropShadowOpacity": 0.5,
+  "dropShadowOffsetY": 6,
+  "extrusionDepthPx": 5,
+  "extrusionColor": "#090d16",
+  "strokeWidthPx": 9,
+  "strokeColor": "#111827",
+  "outerRimWidthPx": 0,
+  "outerRimColor": "#000000",
+  "bevelStrength": 1,
+  "gradientStops": [
+    {
+      "offset": 0,
+      "color": "#f8fafc"
+    },
+    {
+      "offset": 0.3,
+      "color": "#cbd5e1"
+    },
+    {
+      "offset": 0.65,
+      "color": "#64748b"
+    },
+    {
+      "offset": 1,
+      "color": "#334155"
+    }
+  ],
+  "poreDensity": 10,
+  "poreMinRadius": 0.8,
+  "poreMaxRadius": 2,
+  "poreShadowColor": "#1e293b",
+  "poreRimColor": "#e2e8f0",
+  "crackIntensity": 25,
+  "crackColor": "#0f172a",
+  "topHighlightWidthPx": 2,
+  "topHighlightColor": "#ffffff",
+  "topHighlightOpacity": 0.7
+}

@@ -1,0 +1,8 @@
+{
+  "shadingMode": "hybrid-3d-bevel",
+  "uppercaseOnly": true,
+  "fixedHeightPx": 96,
+  "autoTrimWidth": true,
+  "paddingXFactor": 3,
+  "baselineRatio": 0.74
+}

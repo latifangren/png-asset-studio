@@ -1,0 +1,45 @@
+{
+  "id": "about-stone",
+  "name": "Batu ABOUT (3D Rim)",
+  "badgeLabel": "Identik Referensi ABOUT",
+  "fontFamily": "Titan One",
+  "fontSizePx": 72,
+  "fontWeight": 900,
+  "dropShadowOpacity": 0.35,
+  "dropShadowOffsetY": 5,
+  "extrusionDepthPx": 6,
+  "extrusionColor": "#08050a",
+  "strokeWidthPx": 10,
+  "strokeColor": "#08050a",
+  "outerRimWidthPx": 2.2,
+  "outerRimColor": "#3a0947",
+  "bevelStrength": 1.15,
+  "gradientStops": [
+    {
+      "offset": 0,
+      "color": "#fcf5e8"
+    },
+    {
+      "offset": 0.3,
+      "color": "#dccbb2"
+    },
+    {
+      "offset": 0.7,
+      "color": "#c6b296"
+    },
+    {
+      "offset": 1,
+      "color": "#8c785e"
+    }
+  ],
+  "poreDensity": 32,
+  "poreMinRadius": 1.2,
+  "poreMaxRadius": 3.6,
+  "poreShadowColor": "#685640",
+  "poreRimColor": "#f4e8d1",
+  "crackIntensity": 55,
+  "crackColor": "#4b3b2a",
+  "topHighlightWidthPx": 2.2,
+  "topHighlightColor": "#fffdf7",
+  "topHighlightOpacity": 0.65
+}

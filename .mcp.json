@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "png-asset-studio": {
+      "command": "npx",
+      "args": ["tsx", "mcp-stdio.ts"]
+    }
+  }
+}

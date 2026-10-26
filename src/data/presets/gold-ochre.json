@@ -1,0 +1,45 @@
+{
+  "id": "gold-ochre",
+  "name": "Gold Ochre (ID)",
+  "badgeLabel": "Prehistoric Emas HD",
+  "fontFamily": "Titan One",
+  "fontSizePx": 70,
+  "fontWeight": 900,
+  "dropShadowOpacity": 0.45,
+  "dropShadowOffsetY": 6,
+  "extrusionDepthPx": 5,
+  "extrusionColor": "#221304",
+  "strokeWidthPx": 9,
+  "strokeColor": "#281706",
+  "outerRimWidthPx": 0,
+  "outerRimColor": "#000000",
+  "bevelStrength": 0.85,
+  "gradientStops": [
+    {
+      "offset": 0,
+      "color": "#fff7db"
+    },
+    {
+      "offset": 0.35,
+      "color": "#f0c976"
+    },
+    {
+      "offset": 0.75,
+      "color": "#c48c2e"
+    },
+    {
+      "offset": 1,
+      "color": "#834f0c"
+    }
+  ],
+  "poreDensity": 24,
+  "poreMinRadius": 0.9,
+  "poreMaxRadius": 3,
+  "poreShadowColor": "#6b4312",
+  "poreRimColor": "#fff7db",
+  "crackIntensity": 35,
+  "crackColor": "#523007",
+  "topHighlightWidthPx": 2,
+  "topHighlightColor": "#ffffff",
+  "topHighlightOpacity": 0.58
+}

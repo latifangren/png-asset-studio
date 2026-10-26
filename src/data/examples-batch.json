@@ -1,0 +1,58 @@
+[
+  {
+    "id": "bw-1",
+    "text": "SETTINGS",
+    "langFolder": "en",
+    "presetId": "grey-stone",
+    "filename": "settings.png"
+  },
+  {
+    "id": "bw-2",
+    "text": "EXTRAS",
+    "langFolder": "en",
+    "presetId": "grey-stone",
+    "filename": "extras.png"
+  },
+  {
+    "id": "bw-3",
+    "text": "ABOUT",
+    "langFolder": "en",
+    "presetId": "about-stone",
+    "filename": "about.png"
+  },
+  {
+    "id": "bw-4",
+    "text": "PLAY",
+    "langFolder": "en",
+    "presetId": "grey-stone",
+    "filename": "play.png"
+  },
+  {
+    "id": "bw-5",
+    "text": "PENGATURAN",
+    "langFolder": "id",
+    "presetId": "gold-ochre",
+    "filename": "settings.png"
+  },
+  {
+    "id": "bw-6",
+    "text": "EKSTRA",
+    "langFolder": "id",
+    "presetId": "gold-ochre",
+    "filename": "extras.png"
+  },
+  {
+    "id": "bw-7",
+    "text": "TENTANG",
+    "langFolder": "id",
+    "presetId": "gold-ochre",
+    "filename": "about.png"
+  },
+  {
+    "id": "bw-8",
+    "text": "MAINKAN",
+    "langFolder": "id",
+    "presetId": "gold-ochre",
+    "filename": "play.png"
+  }
+]

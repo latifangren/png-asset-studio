@@ -1,0 +1,49 @@
+{
+  "id": "grey-stone",
+  "name": "Grey Stone (EN)",
+  "badgeLabel": "Prehistoric HD 96px",
+  "fontFamily": "Titan One",
+  "fontSizePx": 70,
+  "fontWeight": 900,
+  "dropShadowOpacity": 0.45,
+  "dropShadowOffsetY": 6,
+  "extrusionDepthPx": 5,
+  "extrusionColor": "#16130e",
+  "strokeWidthPx": 9,
+  "strokeColor": "#221c15",
+  "outerRimWidthPx": 0,
+  "outerRimColor": "#000000",
+  "bevelStrength": 0.85,
+  "gradientStops": [
+    {
+      "offset": 0,
+      "color": "#eeebe2"
+    },
+    {
+      "offset": 0.25,
+      "color": "#dfd9cd"
+    },
+    {
+      "offset": 0.6,
+      "color": "#cfc8b7"
+    },
+    {
+      "offset": 0.85,
+      "color": "#b5ad9a"
+    },
+    {
+      "offset": 1,
+      "color": "#8a816e"
+    }
+  ],
+  "poreDensity": 24,
+  "poreMinRadius": 0.9,
+  "poreMaxRadius": 3,
+  "poreShadowColor": "#554c3d",
+  "poreRimColor": "#ffffff",
+  "crackIntensity": 35,
+  "crackColor": "#453c2e",
+  "topHighlightWidthPx": 2,
+  "topHighlightColor": "#ffffff",
+  "topHighlightOpacity": 0.55
+}

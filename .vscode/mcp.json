@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "png-asset-studio": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["tsx", "mcp-stdio.ts"]
+    },
+    "png-asset-studio-http": {
+      "type": "http",
+      "url": "http://localhost:3000/mcp"
+    }
+  }
+}
